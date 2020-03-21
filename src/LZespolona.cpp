@@ -127,15 +127,23 @@ Wyswietla liczbe zespolona
 Argument:
 l - liczba do wyswietlenia
 */
-void wyswietlaj(LZespolona l){
-  cout<<'('<<l.re<<showpos<<l.im<<noshowpos<<"i)";
-}
-bool wczytaj(LZespolona &l)
+
+
+std::istream & operator >>(std::istream & strm, LZespolona & l)
 {
-  char lnaw,pnaw,i;
-  cin>>lnaw>>l.re>>l.im>>i>>pnaw;
-  if(lnaw=='('&& pnaw==')'&& i=='i')
-  return true;
-  else
-    return false;
-  }
+  char znak;
+  strm>>znak;
+  if(znak!='(')
+  strm.setstate(std::ios::failbit);
+  strm>>l.re>>l.im>>znak;
+  if(znak!='i')
+  strm.setstate(std::ios::failbit);
+  strm>>znak;
+  if(znak!=')')
+  strm.setstate(std::ios::failbit);
+  return strm;
+}
+std::ostream & operator <<(std::ostream & strm, LZespolona l)
+{
+  strm<<'('<<l.re<<showpos<<l.im<<noshowpos<<"i)";
+}

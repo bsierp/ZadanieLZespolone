@@ -7,88 +7,80 @@ using std::cerr;
  * Tu nalezy zdefiniowac funkcje, ktorych zapowiedzi znajduja sie
  * w pliku naglowkowym.
  */
-bool Wczytaj(WyrazenieZesp &WyrZ){
+std::istream & operator >>(std::istream & strm,WyrazenieZesp &w)
+{
+    strm>>w.Arg1>>w.Op>>w.Arg2;
+    return strm;
+}
+std::istream & operator >>(std::istream & strm, Operator &Oper)
+{
     char op;
-    if(wczytaj(WyrZ.Arg1)==true)
-    {
-    cin>>op;
+    strm>>op;
     switch (op)
     {
     case '+':
     {
-       WyrZ.Op=Op_Dodaj;
+    Oper=Op_Dodaj;
         break;
     }
     case '-':
     {
-        WyrZ.Op=Op_Odejmij;
+        Oper=Op_Odejmij;
         break;
     }
     case '*':
     {
-        WyrZ.Op=Op_Mnoz;
+        Oper=Op_Mnoz;
         break;
     }
     case '/':
     {
-        WyrZ.Op=Op_Dziel;
+        Oper=Op_Dziel;
         break;
     }
     default:
     {
-        cerr<<"Nie rozpoznano operatora"<<endl;
-        return false;
-        break;
+        cerr<<"Nieprawidlowy operator"<<endl;
+        strm.setstate(std::ios::failbit);
+     break;
     }
-        break;
     }
-    if(wczytaj(WyrZ.Arg2)==true)
-    return true;
-    else
+    return strm;
+}
+std::ostream & operator <<(std::ostream & strm,WyrazenieZesp w)
+{
+    strm<<w.Arg1<<w.Op<<w.Arg2;
+    return strm;
+}
+std::ostream & operator <<(std::ostream & strm,Operator Oper)
+{
+    switch (Oper)
     {
-    cerr<<"Wyrazenie nie zostalo wczytane poprawnie"<<endl;
-    return false;  
+    case Op_Dodaj:
+    {
+        strm<<'+';
+        break;
     }
+    case Op_Odejmij:
+    {
+        strm<<'-';
+        break;
     }
-else
-{
-    cerr<<"Wyrazenie nie zostalo wczytane poprawnie"<<endl;
-    return false;
+    case Op_Mnoz:
+    {
+        strm<<'*';
+        break;
+    }
+    case Op_Dziel:
+    {
+        strm<<'/';
+        break;
+    }
+    default:
+        break;
+    }
+    return strm;
 }
-
-}
-void Wyswietl(WyrazenieZesp  WyrZ){
-wyswietlaj(WyrZ.Arg1); 
-switch (WyrZ.Op)
-{
-case Op_Dodaj:
-   {
-       cout<<'+';
-    break;
-   }
-   case Op_Mnoz:
-   {
-       cout<<'*';
-       break;
-   }
-   case Op_Odejmij:
-   {
-       cout<<'-';
-       break;
-   }
-   case Op_Dziel:
-   {
-       cout<<'/';
-       break;
-   }
-default:
-    break;
-}
-wyswietlaj(WyrZ.Arg2);
-cout<<endl;
-}
-
-
 LZespolona Oblicz(WyrazenieZesp  WyrZ)
 {
     LZespolona Wynik;

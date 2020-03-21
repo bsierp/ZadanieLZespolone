@@ -12,13 +12,13 @@ int main(int argc, char **argv)
   LZespolona l1,l2,l3;
   WyrazenieZesp wyr;
     l1=utworz(2,3);
-    wyswietlaj(l1);
     l2=utworz(2,-4);
-    wyswietlaj(l2);
     l3=l1/l2;
-    wyswietlaj(l3);
-    if(Wczytaj(wyr)==true)
- Wyswietl(wyr);
+   cin>>wyr;
+   if(!cin.good())
+   cin.clear();
+   else
+   cout<<wyr<<endl;
   if(a!=1){
   if (argc > 2) {
     cout << endl;
