@@ -147,3 +147,17 @@ std::ostream & operator <<(std::ostream & strm, LZespolona l)
 {
   strm<<'('<<l.re<<showpos<<l.im<<noshowpos<<"i)";
 }
+bool operator ==(LZespolona Skl1, LZespolona Skl2)
+{
+  if(Skl1.re==Skl2.re && Skl1.im==Skl2.im)
+  return true;
+  else 
+  return false;
+}
+bool operator !=(LZespolona Skl1, LZespolona Skl2)
+{
+  if(Skl1.re!=Skl2.re||Skl1.im!=Skl2.im)
+  return true;
+  else
+  return false;
+}
