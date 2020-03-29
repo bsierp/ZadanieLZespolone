@@ -3,7 +3,8 @@
 #include <cassert>
 #include "BazaTestu.hh"
 
-using namespace std;
+using std::cerr;
+using std::endl;
 
 /*
  * Tablica, ktora jest widoczna tylko w tym module.
@@ -16,10 +17,12 @@ static WyrazenieZesp  TestLatwy[] =
     {{4,8}, Op_Dziel, {1,0}},
   };
 
-/*
- * Analogicznie zdefiniuj test "trudne"
- *
- */
+static WyrazenieZesp TestTrudny[] =
+  {{{0.456,3.783}, Op_Dodaj, {4.344,3.315}},
+   {{4.589,0.384}, Op_Odejmij, {0.848,2}},
+   {{7.3,4.7}, Op_Mnoz, {4.6,3.4}},
+   {{7.8,0.2}, Op_Dziel, {2.4,0.04}},
+   };
 
 
 
@@ -77,10 +80,10 @@ bool InicjalizujTest( BazaTestu  *wskBazaTestu, const char *sNazwaTestu )
     UstawTest(wskBazaTestu,TestLatwy,sizeof(TestLatwy)/sizeof(WyrazenieZesp));
     return true;
   }
-  /*
-   * Analogicznie zrob inicjalizacje dla testu trudne
-   */
-
+  else if(!strcmp(sNazwaTestu,"trudny")){
+    UstawTest(wskBazaTestu,TestTrudny,sizeof(TestTrudny)/sizeof(WyrazenieZesp));
+    return true;
+  }
   cerr << "Otwarcie testu '" << sNazwaTestu << "' nie powiodlo sie." << endl;
   return false;
 }

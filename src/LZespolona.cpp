@@ -4,6 +4,7 @@ using std::showpos;
 using std::noshowpos;
 using std::endl;
 using std::cin;
+using std::cerr;
 /*
 Realizuje operacje modulu liczby zespolonej
 Argument:
@@ -42,9 +43,18 @@ Liczbe zespolona podzielona przez rzeczywista
 LZespolona operator / (LZespolona Skl1,double Skl2 )
 {
 LZespolona Wynik;
+if(Skl2!=0)
+{
 Wynik.re = Skl1.re/Skl2;
 Wynik.im = Skl1.im/Skl2;
 return Wynik;
+}
+else
+{
+  cerr<<"Blad: Dzielenie przez zero"<<endl;
+  exit(0);
+}
+
 }
 /*!
  * Realizuje dodanie dwoch liczb zespolonych.
@@ -122,11 +132,7 @@ LZespolona utworz(double r, double i){
   l.im=i;
   return l;
 }
-/*
-Wyswietla liczbe zespolona
-Argument:
-l - liczba do wyswietlenia
-*/
+
 
 
 std::istream & operator >>(std::istream & strm, LZespolona & l)
@@ -149,15 +155,14 @@ std::ostream & operator <<(std::ostream & strm, LZespolona l)
 }
 bool operator ==(LZespolona Skl1, LZespolona Skl2)
 {
-  if(Skl1.re==Skl2.re && Skl1.im==Skl2.im)
+  double epsilon=0.0001f;
+  if(fabs(Skl1.re-Skl2.re)<epsilon && fabs(Skl1.im-Skl2.im)<epsilon){
   return true;
+  }
   else 
   return false;
 }
 bool operator !=(LZespolona Skl1, LZespolona Skl2)
 {
-  if(Skl1.re!=Skl2.re||Skl1.im!=Skl2.im)
-  return true;
-  else
-  return false;
+  return !(Skl1==Skl2);
 }

@@ -1,26 +1,18 @@
 #include <iostream>
-#include "BazaTestu.hh"
+#include "Statystyka.hh"
+using std::cout;
+using std::endl;
+using std::cin;
+using std::cerr;
 
-using namespace std;
 
 
 
 
 int main(int argc, char **argv)
 {
-  int a=1;
-  LZespolona l1,l2,l3;
-  WyrazenieZesp wyr;
-    l1=utworz(2,3);
-    l2=utworz(2,-4);
-    l3=l1/l2;
-   cin>>wyr;
-   if(!cin.good())
-   cin.clear();
-   else
-   cout<<wyr<<endl;
-  if(a!=1){
-  if (argc > 2) {
+  
+  if (argc < 2) {
     cout << endl;
     cout << " Brak opcji okreslajacej rodzaj testu." << endl;
     cout << " Dopuszczalne nazwy to:  latwy, trudny." << endl;
@@ -43,16 +35,45 @@ int main(int argc, char **argv)
   cout << endl;
 
   WyrazenieZesp   WyrZ_PytanieTestowe;
-  
+  int a;
+  LZespolona Odp;
+  Statystyka wynik;
+  inicjuj(wynik);
   while (PobierzNastpnePytanie(&BazaT,&WyrZ_PytanieTestowe)) {
-    cout << " Czesc rzeczywista pierwszego argumentu: ";
-    cout << WyrZ_PytanieTestowe.Arg1.re << endl;
-  }
-
-  
+    a=0;
+    while(a!=3){
+    cout << "Rozwiaz podane wyrazenie:" ;
+    cout << WyrZ_PytanieTestowe << endl;
+    cin >> Odp;
+    if(!cin.good()){
+      cin.clear();
+      cin.ignore(10000,'\n');
+      if(a!=3)
+      cout<<"Niepoprawny format odpowiedzi. Pozostalo prob:"<<3-++a<<endl;
+      if(a==3){
+      cout<<"Wykorzystano limit blednych prob. Odpowiedz uznana za bledna."<<endl;
+      cout<<"Prawidlowa odpowiedz to:"<<Oblicz(WyrZ_PytanieTestowe)<<endl;
+      bledna(wynik);
+      }
+    }
+    else{
+    if(Odp==Oblicz(WyrZ_PytanieTestowe)){
+      cout<<"Gratulacje! Poprawna odpowiedz.Przejdz do nastepnego pytania"<<endl;
+      poprawna(wynik);
+    }
+    else
+    {
+      cout<<"Odpowiedz niepoprawna.Prawidlowa odpowiedz to:"<<Oblicz(WyrZ_PytanieTestowe)<<"Przejdz do nastepnego pytania"<<endl;
+      bledna(wynik);
+    }  
+    a=3;
+    }
+    }
+    }
   cout << endl;
   cout << " Koniec testu" << endl;
+  cout <<wynik;
   cout << endl;
 
 }
-}
+
