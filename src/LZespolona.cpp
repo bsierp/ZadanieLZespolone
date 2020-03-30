@@ -52,7 +52,7 @@ return Wynik;
 else
 {
   cerr<<"Blad: Dzielenie przez zero"<<endl;
-  exit(0);
+  exit(1);
 }
 
 }
